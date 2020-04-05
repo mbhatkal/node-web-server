@@ -1,4 +1,6 @@
-console.log('Running our Express Web Server port 3000');
+const port =process.env.port || 3000;
+console.log('Running our Express Web Server port ='+port);
+// if process.env.port does not exist
 const express = require('express'); // loaded express
 const hbs = require('hbs');
 const customer = {
@@ -10,7 +12,7 @@ const customer = {
 var app = express(); // create the web server application
 app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
-app.listen(3000); // wait for a connection from a browser
+app.listen(port); // wait for a connection from a browser
 app.get('/',(req,res) =>{ // respond to the get root request
   res.render('index.hbs',{
     pageHeading:'Home Page',
