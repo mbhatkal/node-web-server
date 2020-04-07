@@ -1,5 +1,5 @@
-const port =process.env.port || 3000;
-console.log('Running our Express Web Server port ='+port);
+const port = process.env.PORT || 3000; // note capital PORT
+console.log(`Running our Express Web Server port = ${port}`);
 // if process.env.port does not exist
 const express = require('express'); // loaded express
 const hbs = require('hbs');
