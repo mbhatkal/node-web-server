@@ -16,7 +16,7 @@ app.listen(port); // wait for a connection from a browser
 app.get('/',(req,res) =>{ // respond to the get root request
   console.log('Inside Home page');
   res.render('index.hbs',{
-    title:'Home Page',
+    title:'ADM Home Page',
     pageHeading:'Home Page',
     href1:'/',
     refInfo1:'Home',
@@ -28,7 +28,7 @@ app.get('/',(req,res) =>{ // respond to the get root request
 });
 app.get('/about',(req,res) =>{ // respond to the get root request
   console.log('Inside About page');
-  res.render('index.hbs',{
+  res.render('ADM index.hbs',{
     title:'About Page',
     pageHeading:'About Page',
     href1:'/',
@@ -42,7 +42,7 @@ app.get('/about',(req,res) =>{ // respond to the get root request
 app.get('/help',(req,res) =>{ // respond to the get root request
   console.log('Inside help page');
   res.render('index.hbs',{
-    title:'Help Page',
+    title:'ADM Help Page',
     pageHeading:'Help Page',
     href1:'/',
     refInfo1:'Home',
