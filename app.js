@@ -2,6 +2,7 @@ const port = process.env.PORT || 3000; // note capital PORT
 console.log(`Running our Express Web Server port = ${port}`);
 // if process.env.port does not exist
 const express = require('express'); // loaded express
+// To handle meta data in <head> we need express.Router()
 const hbs = require('hbs');
 const customer = {
   name:"Mahesh",
@@ -9,7 +10,7 @@ const customer = {
   city:["Mumbai","Bangalore","Delhi"]
 };
 
-var app = express.Router(); // create the web server application
+var app = express(); // create the web server application
 app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
 app.listen(port); // wait for a connection from a browser
