@@ -28,8 +28,8 @@ app.get('/',(req,res) =>{ // respond to the get root request
 });
 app.get('/about',(req,res) =>{ // respond to the get root request
   console.log('Inside About page');
-  res.render('ADM index.hbs',{
-    title:'About Page',
+  res.render('index.hbs',{
+    title:'ADM About Page',
     pageHeading:'About Page',
     href1:'/',
     refInfo1:'Home',
