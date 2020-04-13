@@ -1,5 +1,5 @@
 body{
-	header,nav,article,nav,section,div,aside,footer {
+	header,nav,ul,li,article,nav,section,div,aside,footer {
       background-color:#999;
       border-radius:5px;
       color:white;
@@ -7,24 +7,28 @@ body{
       font-size:30px;
       text-align:center;
     }
-    header,nav,article,nav,section,div,aside,footer {
+    header,nav,ul,li,article,nav,section,div,aside,footer {
       border:1px solid grey;
       padding:20px;
       margin-bottom:25px;
+    }
+    header>nav>ul>li{
+    	list-style: none;
     }
     section {
       display:grid;
       grid-template-columns:auto auto auto auto;
     }
     section, div {
-      border:2px solid white;
+    	display:flex;
+    	flex-wrap:wrap;
+    	flex-basis:25%;
+    	border:2px solid white;
       padding:30px;
       margin:10px;
     }
 }
-    
- 
-    
+   
     
  
     
