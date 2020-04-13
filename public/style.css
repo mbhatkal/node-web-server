@@ -1,36 +1,22 @@
-body{
-	header,nav,ul,li,article,nav,section,div,aside,footer {
-      background-color:#999;
-      border-radius:5px;
-      color:white;
-      font-family:arial, san-serif;
-      font-size:30px;
-      text-align:center;
-    }
-    header,nav,ul,li,article,nav,section,div,aside,footer {
-      border:1px solid grey;
-      padding:20px;
-      margin-bottom:25px;
-    }
-    header>nav>ul>li{
-    	list-style: none;
-    }
-    section {
-      display:grid;
-      grid-template-columns:auto auto auto auto;
-    }
-    section, div {
-    	display:flex;
-    	flex-wrap:wrap;
-    	flex-basis:25%;
-    	border:2px solid white;
-      padding:30px;
-      margin:10px;
-    }
+/* All the HTML5 tags have border,padding and bottom margin */
+header, nav, aside, article, section, footer {
+border: 1px solid gray;
+padding: 25px;
+margin-bottom: 25px;
 }
-   
-    
- 
-    
- 
-    
+nav a {
+  display: flex;
+  flex-flow: wrap;
+}
+div {
+  background: #659494;
+  color: white;
+  text-align: center;
+  margin: 15px;
+  padding: 100px;
+}
+
+section {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+}
