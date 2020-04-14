@@ -21,12 +21,34 @@ app.get('/',(req,res) =>{ // respond to the get root request
     pageHeading:'Home Page',
     href1:'/',
     refInfo1:'Home',
-    href2:'/about',
-    refInfo2:'About',
-    href3:'/help',
-    refInfo3:'Help'
+    href2:'/Temperature',
+    refInfo2:'Temperature',
+    href3:'/Customer',
+    refInfo3:'Customer',
+    href4:'/About',
+    refInfo4:'About',
+    href5:'/Help',
+    refInfo5:'Help'
   });
 });
+app.get('/Temperature',(req,res) =>{ // respond to the get root request
+  console.log('Inside Temperature page');
+  res.render('index.hbs',{
+    title:'ADM Global Temperature Page',
+    pageHeading:'Global Temperature Page',
+    href1:'/',
+    refInfo1:'Home',
+    href2:'/Temperature',
+    refInfo2:'Temperature',
+    href3:'/Customer',
+    refInfo3:'Customer',
+    href4:'/About',
+    refInfo4:'About',
+    href5:'/Help',
+    refInfo5:'Help'
+  });
+});
+
 app.get('/about',(req,res) =>{ // respond to the get root request
   console.log('Inside About page');
   res.render('index.hbs',{
@@ -34,10 +56,14 @@ app.get('/about',(req,res) =>{ // respond to the get root request
     pageHeading:'About Page',
     href1:'/',
     refInfo1:'Home',
-    href2:'/about',
-    refInfo2:'About',
-    href3:'/help',
-    refInfo3:'Help'
+    href2:'/Temperature',
+    refInfo2:'Temperature',
+    href3:'/Customer',
+    refInfo3:'Customer',
+    href4:'/About',
+    refInfo4:'About',
+    href5:'/Help',
+    refInfo5:'Help'
   });
 });
 app.get('/help',(req,res) =>{ // respond to the get root request
@@ -47,13 +73,17 @@ app.get('/help',(req,res) =>{ // respond to the get root request
     pageHeading:'Help Page',
     href1:'/',
     refInfo1:'Home',
-    href2:'/about',
-    refInfo2:'About',
-    href3:'/help',
-    refInfo3:'Help'
+    href2:'/Temperature',
+    refInfo2:'Temperature',
+    href3:'/Customer',
+    refInfo3:'Customer',
+    href4:'/About',
+    refInfo4:'About',
+    href5:'/Help',
+    refInfo5:'Help'
   });
 });
-app.get('/customer',(req,res) =>{ // respond to the get root request
+app.get('/Customer',(req,res) =>{ // respond to the get root request
 console.log('Inside customer page');
 res.send(customer);
 });

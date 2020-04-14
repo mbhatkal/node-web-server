@@ -4,10 +4,17 @@ border: 1px solid gray;
 padding: 25px;
 margin-bottom: 25px;
 }
-nav a {
+/* We need first to define a Flex/Grid container */
+nav, a {
   display: flex;
-  flex-flow: wrap;
+  background: #659494;
+  padding-right: 50px;
 }
+/* hover selector on the anchor element */
+nav a:hover {
+  text-decoration: underline;
+  }
+
 div {
   background: #659494;
   color: white;
