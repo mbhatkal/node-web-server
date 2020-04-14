@@ -11,14 +11,26 @@ const customer = {
 };
 
 var app = express(); // create the web server application
+var respFooter ="ADM Web Server Version 1.0 - "
 app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
 app.listen(port); // wait for a connection from a browser
+//An example middleware
+var requestTime = function (req, res, next) {
+  req.requestTime = Date.now()
+  next()
+}
+//The middleware is called before the request
+app.use(requestTime);
+// we now process the http request
 app.get('/',(req,res) =>{ // respond to the get root request
   console.log('Inside Home page');
+  respFooter += req.requestTime;
   res.render('index.hbs',{
     title:'ADM Home Page',
     pageHeading:'Home Page',
+    footer:respFooter,
+    //The navigation links
     href1:'/',
     refInfo1:'Home',
     href2:'/Temperature',
@@ -31,11 +43,14 @@ app.get('/',(req,res) =>{ // respond to the get root request
     refInfo5:'Help'
   });
 });
-app.get('/Temperature',(req,res) =>{ // respond to the get root request
+app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
   console.log('Inside Temperature page');
+  respFooter += req.requestTime;
   res.render('index.hbs',{
     title:'ADM Global Temperature Page',
     pageHeading:'Global Temperature Page',
+    footer:respFooter,
+    //The Navigation link
     href1:'/',
     refInfo1:'Home',
     href2:'/Temperature',
@@ -49,11 +64,13 @@ app.get('/Temperature',(req,res) =>{ // respond to the get root request
   });
 });
 
-app.get('/about',(req,res) =>{ // respond to the get root request
+app.get('/about',(req,res) =>{ // respond to the get about request
   console.log('Inside About page');
+  respFooter += req.requestTime;
   res.render('index.hbs',{
     title:'ADM About Page',
     pageHeading:'About Page',
+    footer:respFooter,
     href1:'/',
     refInfo1:'Home',
     href2:'/Temperature',
@@ -66,11 +83,13 @@ app.get('/about',(req,res) =>{ // respond to the get root request
     refInfo5:'Help'
   });
 });
-app.get('/help',(req,res) =>{ // respond to the get root request
+app.get('/help',(req,res) =>{ // respond to the get help request
   console.log('Inside help page');
+  respFooter += req.requestTime;
   res.render('index.hbs',{
     title:'ADM Help Page',
     pageHeading:'Help Page',
+    footer:respFooter,
     href1:'/',
     refInfo1:'Home',
     href2:'/Temperature',
