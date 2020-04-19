@@ -19,18 +19,28 @@ app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
 app.listen(port); // wait for a connection from a browser
 
-//An example middleware  for current date
+//Two examples of middleware  for current date
 var requestTime = function (req, res, next) {
   // The passed variable is requestTime and Month is from 0 hence +1
   var today = new Date();
   var date = today.getDate() + '-'+ (today.getMonth()+1) +'-'+today.getFullYear();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   req.requestTime = date + '-' + time;
-  next()
+  next();
+}
+
+var requestCustomer = function(req,res,next){
+  if(req.query.userName != "") 
+    customer.name = req.query.username; // $_GET["id"]
+  // we fill the request variable requestCutomer here
+  req.requestCustomer = customer.name;
+  next();
 }
 
 //The middleware is called before the request
 app.use(requestTime);
+app.use(requestCustomer);
+
 // we now process the http request
 
 //The routes for the website
@@ -49,8 +59,8 @@ app.get('/',(req,res) =>{ // respond to the get root request
     refInfo2:'Temperature',
     href3:'/Customer',
     refInfo3:'Customer',
-    href4:'/About',
-    refInfo4:'About',
+    href4:'/Login',
+    refInfo4:'Login',
     href5:'/Help',
     refInfo5:'Help'
   });
@@ -74,29 +84,31 @@ app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
     refInfo2:'Temperature',
     href3:'/Customer',
     refInfo3:'Customer',
-    href4:'/About',
-    refInfo4:'About',
+    href4:'/Login',
+    refInfo4:'Login',
     href5:'/Help',
     refInfo5:'Help'
   });
 });
 
-app.get('/about',(req,res) =>{ // respond to the get about request
-  console.log('Inside About page');
+app.get('/Login',(req,res) =>{ // respond to the get the login html page request
+  console.log('Inside Login page');
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
-  res.render('index.hbs',{
-    title:'ADM About Page',
-    pageHeading:'About Page',
+  console.log(req.requestCustomer);
+  res.render('Login.hbs',{ // The render html page changes here
+    title:'ADM Login Page',
+    pageHeading:'Login Page',
     footer:respFooter,
+    refName:req.requestCustomer,
     href1:'/',
     refInfo1:'Home',
     href2:'/Temperature',
     refInfo2:'Temperature',
     href3:'/Customer',
     refInfo3:'Customer',
-    href4:'/About',
-    refInfo4:'About',
+    href4:'/Login',
+    refInfo4:'Login',
     href5:'/Help',
     refInfo5:'Help'
   });
@@ -116,8 +128,8 @@ app.get('/help',(req,res) =>{ // respond to the get help request
     refInfo2:'Temperature',
     href3:'/Customer',
     refInfo3:'Customer',
-    href4:'/About',
-    refInfo4:'About',
+    href4:'/Login',
+    refInfo4:'Login',
     href5:'/Help',
     refInfo5:'Help'
   });

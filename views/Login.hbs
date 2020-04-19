@@ -19,10 +19,11 @@
   </nav>
   <article>Article - Section
   	<section>
-    	<div>Product 1 </div>
-    	<div>Product 2 </div>
-    	<div>Product 3 </div>
-    	<div>Product 4 </div>
+      <form action="/Login"  method = "GET">
+        <label for="username">Username: </label>
+        <input type="text" id="username" name="username" value="{{refName}}"><br>
+        <input type="submit" value="Submit">
+      </form>
     </section>
   </article>
   <aside>Aside</aside>
