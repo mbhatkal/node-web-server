@@ -8,15 +8,21 @@ const cache = {
 temperature:"24" + '°C', 
 humidity: "48%"};
 
+//define a array
+// JavaScript objects are containers for named values called properties or methods.
 const customer = {
   name:"Mahesh",
   age:56,
   city:["Mumbai","Bangalore","Delhi"]
 };
 
+
 var app = express(); // create the web server application
 app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
+console.log('Setting userName');
+app.set('userName','Mahesh');
+console.log(app.get('userName'));
 app.listen(port); // wait for a connection from a browser
 
 //Two examples of middleware  for current date
@@ -30,10 +36,16 @@ var requestTime = function (req, res, next) {
 }
 
 var requestCustomer = function(req,res,next){
-  if(req.query.userName != "") 
-    customer.name = req.query.username; // $_GET["id"]
-  // we fill the request variable requestCutomer here
-  req.requestCustomer = customer.name;
+  console.log("Inside Middleware");
+  console.log(req.query.username);
+  if(req.query.username == null) {
+    req.requestCustomer = app.get('userName') // $_GET["id"]
+  }
+  else{
+    req.requestCustomer = req.query.username; 
+    app.set('username',req.requestCustomer);
+  };
+  console.log(req.requestCustomer);
   next();
 }
 
@@ -95,12 +107,13 @@ app.get('/Login',(req,res) =>{ // respond to the get the login html page request
   console.log('Inside Login page');
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
-  console.log(req.requestCustomer);
+  var respUserName = req.requestCustomer;
+  console.log(respUserName);
   res.render('Login.hbs',{ // The render html page changes here
     title:'ADM Login Page',
     pageHeading:'Login Page',
     footer:respFooter,
-    refName:req.requestCustomer,
+    refName:respUserName,
     href1:'/',
     refInfo1:'Home',
     href2:'/Temperature',
@@ -137,7 +150,7 @@ app.get('/help',(req,res) =>{ // respond to the get help request
 
 app.get('/Customer',(req,res) =>{ // respond to the get root request
 console.log('Inside customer page');
-res.send(customer);
+res.send(global.customer);
 });
 
 // for all the routes which are not defined
