@@ -14,6 +14,10 @@ const customer = {
   latitude:"78",
   longitude:"28"};
 
+// WeatherApp support 
+let apiKey = '151db84bf12a3993cf793a6540e4a48c';
+let url = `http://api.openweathermap.org/data/2.5/weather?q=${customer.city}&units=metric&appid=${apiKey}`;
+
 
 var app = express(); // create the web server application
 app.use(express.static('public')); // all html files in static directory
@@ -66,11 +70,36 @@ var requestCity = function(req,res,next){
   next();
 }
 
+//Middleware No 004 for getting Weather Data
+var requestWeather = function(req,res,next){
+  console.log("Inside Weather Request Middleware");
+  console.log(customer.city);
+  if(req.query.City == null) {
+    console.log("City == NULL")
+    req.requestCity = customer.city // $_GET["id"]
+  }
+  else{
+    req.requestCity = req.query.City; // Variable names are case sensitive
+    customer.city = req.requestCity;
+    request(url, function (error, response, body) {
+    console.error('error:', error); // Print the error if one occurred
+    console.log('statusCode:', response && response.statusCode); // print status code
+    let weather = JSON.parse(body);
+    customer.temperature = weather.main.temp;
+    customer.latitude = weather.coord.lat;
+    customer.longitude = weather.coord.lon;
+    console.log("Weather data procured");
+    });
+  };
+  console.log(req.requestCity);
+  next();
+}
 
 //The middleware is called before the request
 app.use(requestTime);
 app.use(requestCustomer);
 app.use(requestCity);
+app.use(requestWeather);
 
 // we now process the http request
 
