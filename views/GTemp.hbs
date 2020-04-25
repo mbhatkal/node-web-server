@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link type="text/css" rel="stylesheet" href="style.css" >
+  <title>{{title}}</title>
+</head>
+<body>
+  <header>
+  <img src="adm_logo.png" alt="ADM Logo logo">
+  <h1>{{pageHeading}}</h1>
+  </header>
+  <nav>
+      <a href="{{href1}}">{{refInfo1}}</a>
+      <a href="{{href2}}">{{refInfo2}}</a>
+      <a href="{{href3}}">{{refInfo3}}</a>
+      <a href="{{href4}}">{{refInfo4}}</a>
+      <a href="{{href5}}">{{refInfo5}}</a>
+  </nav>
+  <article>Article - Section
+  	<section>
+      <form action="/Temperature"  method = "GET">
+        <label for="City">City: </label>
+        <input type="text" id="City" name="City" value="{{refCity}}"><br>
+        <input type="submit" value="Submit">
+      </form>
+    </section>
+  </article>
+  <aside>Aside</aside>
+  <footer>
+  <p>{{footer}}</p>
+  </footer>
+  <script src="Client.js"></script>
+</body>
+</html>

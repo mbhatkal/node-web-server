@@ -4,17 +4,15 @@ console.log(`Running our Express Web Server port = ${port}`);
 const express = require('express'); // loaded express
 // To handle meta data in <head> we need express.Router()
 const hbs = require('hbs');
-const cache = {
-temperature:"24" + '°C', 
-humidity: "48%"};
 
 //define a array
 // JavaScript objects are containers for named values called properties or methods.
 const customer = {
   name:"Mahesh",
-  age:56,
-  city:["Mumbai","Bangalore","Delhi"]
-};
+  city:"Mumbai",
+  temperature:"24",
+  latitude:"78",
+  longitude:"28"};
 
 
 var app = express(); // create the web server application
@@ -23,7 +21,7 @@ app.set('view_engine','hbs');
 console.log('Setting userName');
 app.listen(port); // wait for a connection from a browser
 
-//Two examples of middleware  for current date
+// Middleware No 001 for current date
 var requestTime = function (req, res, next) {
   // The passed variable is requestTime and Month is from 0 hence +1
   var today = new Date();
@@ -33,25 +31,46 @@ var requestTime = function (req, res, next) {
   next();
 }
 
-//This is a middleware and runs before the request
+// Middleware No 002 for login name 
 
 var requestCustomer = function(req,res,next){
-  console.log("Inside Middleware");
+  console.log("Inside Customer Middleware");
   console.log(customer.name);
   if(req.query.username == null) {
+    console.log("customer == NULL");
     req.requestCustomer = customer.name // $_GET["id"]
   }
   else{
     req.requestCustomer = req.query.username; 
     customer.name = req.requestCustomer;
+    console.log(req.requestCustomer);
   };
   console.log(req.requestCustomer);
   next();
 }
 
+// Middleware No 0003 for City Temperature
+var requestCity = function(req,res,next){
+  console.log("Inside Temperature Middleware");
+  console.log(customer.city);
+  if(req.query.City == null) {
+    console.log("City == NULL")
+    req.requestCity = customer.city // $_GET["id"]
+  }
+  else{
+    req.requestCity = req.query.City; // Variable names are case sensitive
+    customer.city = req.requestCity;
+    console.log(req.requestCity);
+  };
+  console.log(req.requestCity);
+  next();
+}
+
+
 //The middleware is called before the request
 app.use(requestTime);
 app.use(requestCustomer);
+app.use(requestCity);
 
 // we now process the http request
 
@@ -83,12 +102,16 @@ app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
   console.log('Inside Temperature page');
   var respFooter ="ADM Web Server Version 1.0 - ";
   var respHeading = "ADM Global Temperature = ";
-  respHeading += cache.temperature;
+  var respCity =req.requestCity;
+  respHeading += customer.temperature;
+  respHeading += " °C";
   respFooter += req.requestTime;
-  res.render('index.hbs',{
+  console.log(respCity);
+  res.render('GTemp.hbs',{
     title:'ADM Global Temperature Page',
     pageHeading:respHeading,
     footer:respFooter,
+    refCity:respCity,
     //The Navigation link
     href1:'/',
     refInfo1:'Home',
@@ -109,7 +132,6 @@ app.get('/Login',(req,res) =>{ // respond to the get the login html page request
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
   var respUserName = req.requestCustomer;
-  app.set("userName",respUserName);
   console.log(respUserName);
   res.render('Login.hbs',{ // The render html page changes here
     title:'ADM Login Page',
