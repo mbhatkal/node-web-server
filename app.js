@@ -58,11 +58,12 @@ app.use(requestCustomer);
 //The routes for the website
 app.get('/',(req,res) =>{ // respond to the get root request
   console.log('Inside Home page');
-  var respFooter ="ADM Web Server Version 1.0 - "
+  var respFooter ="ADM Web Server Version 1.0 - ";
+  var respHeading = 'Welcome - ' + req.requestCustomer;
   respFooter += req.requestTime;
   res.render('index.hbs',{
     title:'ADM Home Page',
-    pageHeading:'Home Page',
+    pageHeading:respHeading,
     footer:respFooter,
     //The navigation links
     href1:'/',
@@ -81,13 +82,12 @@ app.get('/',(req,res) =>{ // respond to the get root request
 app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
   console.log('Inside Temperature page');
   var respFooter ="ADM Web Server Version 1.0 - ";
-  var respTemperature = "ADM Global Temperature = ";
-  respTemperature += cache.temperature;
+  var respHeading = "ADM Global Temperature = ";
+  respHeading += cache.temperature;
   respFooter += req.requestTime;
-   pageHeading:'Global Temperature Page',
   res.render('index.hbs',{
     title:'ADM Global Temperature Page',
-    pageHeading:respTemperature,
+    pageHeading:respHeading,
     footer:respFooter,
     //The Navigation link
     href1:'/',
