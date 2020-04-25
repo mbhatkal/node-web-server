@@ -21,8 +21,6 @@ var app = express(); // create the web server application
 app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
 console.log('Setting userName');
-app.set('userName','Mahesh');
-console.log(app.get('userName'));
 app.listen(port); // wait for a connection from a browser
 
 //Two examples of middleware  for current date
@@ -35,15 +33,17 @@ var requestTime = function (req, res, next) {
   next();
 }
 
+//This is a middleware and runs before the request
+
 var requestCustomer = function(req,res,next){
   console.log("Inside Middleware");
-  console.log(req.query.username);
+  console.log(customer.name);
   if(req.query.username == null) {
-    req.requestCustomer = app.get('userName') // $_GET["id"]
+    req.requestCustomer = customer.name // $_GET["id"]
   }
   else{
     req.requestCustomer = req.query.username; 
-    app.set('username',req.requestCustomer);
+    customer.name = req.requestCustomer;
   };
   console.log(req.requestCustomer);
   next();
@@ -103,11 +103,13 @@ app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
   });
 });
 
+//The login page sets the username in customer object
 app.get('/Login',(req,res) =>{ // respond to the get the login html page request
   console.log('Inside Login page');
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
   var respUserName = req.requestCustomer;
+  app.set("userName",respUserName);
   console.log(respUserName);
   res.render('Login.hbs',{ // The render html page changes here
     title:'ADM Login Page',
