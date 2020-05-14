@@ -26,10 +26,15 @@
       </form>
     </section>
   </article>
-  <aside>Aside</aside>
+  <aside id="result">Aside</aside>
   <footer>
   <p>{{footer}}</p>
   </footer>
+  <script type="text/javascript">
+  function doAjax() {
+    document.getElementById("result").innerHTML ="loaded... executing.";
+}
+</script>
   <script src="Client.js"></script>
 </body>
 </html>

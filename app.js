@@ -4,6 +4,7 @@ console.log(`Running our Express Web Server port = ${port}`);
 const express = require('express'); // loaded express
 // To handle meta data in <head> we need express.Router()
 const hbs = require('hbs');
+const request = require('request');
 
 //define a array
 // JavaScript objects are containers for named values called properties or methods.
@@ -16,10 +17,9 @@ const customer = {
 
 // WeatherApp support 
 let apiKey = '151db84bf12a3993cf793a6540e4a48c';
-let url = `http://api.openweathermap.org/data/2.5/weather?q=${customer.city}&units=metric&appid=${apiKey}`;
-
 
 var app = express(); // create the web server application
+//  Using app.use() means that this middleware will be called for every call to the application.
 app.use(express.static('public')); // all html files in static directory
 app.set('view_engine','hbs');
 console.log('Setting userName');
@@ -79,8 +79,8 @@ var requestWeather = function(req,res,next){
     req.requestCity = customer.city // $_GET["id"]
   }
   else{
-    req.requestCity = req.query.City; // Variable names are case sensitive
-    customer.city = req.requestCity;
+    customer.city = req.query.City; // Variable names are case sensitive
+    let url = `http://api.openweathermap.org/data/2.5/weather?q=${customer.city}&units=metric&appid=${apiKey}`;
     request(url, function (error, response, body) {
     console.error('error:', error); // Print the error if one occurred
     console.log('statusCode:', response && response.statusCode); // print status code
