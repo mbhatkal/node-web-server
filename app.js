@@ -8,6 +8,9 @@ const request = require('request');
 
 //define a array
 // JavaScript objects are containers for named values called properties or methods.
+const menu = ["Home","Temperature","Customer","Login","Help"];
+const product = ["LGLite","TKBase","TKDSP","LGLiteATE"];
+
 const customer = {
   name:"Mahesh",
   city:"Mumbai",
@@ -100,104 +103,81 @@ app.use(requestTime);
 app.use(requestCustomer);
 app.use(requestCity);
 app.use(requestWeather);
-
 // we now process the http request
 
 //The routes for the website
-app.get('/',(req,res) =>{ // respond to the get root request
+app.get('/',(req,res) => {
+  console.log("Redirecting to /Home");
+  res.redirect('Home');
+});
+
+app.get('/Home',(req,res) =>{ // respond to the get root request
   console.log('Inside Home page');
+  var respTitle = "ADM Home Page";
   var respFooter ="ADM Web Server Version 1.0 - ";
   var respHeading = 'Welcome - ' + req.requestCustomer;
   respFooter += req.requestTime;
   res.render('index.hbs',{
-    title:'ADM Home Page',
+    title:respTitle,
     pageHeading:respHeading,
     footer:respFooter,
     //The navigation links
-    href1:'/',
-    refInfo1:'Home',
-    href2:'/Temperature',
-    refInfo2:'Temperature',
-    href3:'/Customer',
-    refInfo3:'Customer',
-    href4:'/Login',
-    refInfo4:'Login',
-    href5:'/Help',
-    refInfo5:'Help'
+    menu,
+    product
   });
 });
 
 app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
   console.log('Inside Temperature page');
+  var respTitle = "ADM Global Temperature Page";
   var respFooter ="ADM Web Server Version 1.0 - ";
-  var respHeading = "ADM Global Temperature = ";
-  var respCity =req.requestCity;
+  var respHeading = "Global Temperature for  ";
+  var respCity =req.requestCity; 
+  respHeading += customer.city;
+  respHeading += " = "
   respHeading += customer.temperature;
   respHeading += " °C";
   respFooter += req.requestTime;
   console.log(respCity);
   res.render('GTemp.hbs',{
-    title:'ADM Global Temperature Page',
+    title:respTitle,
     pageHeading:respHeading,
     footer:respFooter,
     refCity:respCity,
     //The Navigation link
-    href1:'/',
-    refInfo1:'Home',
-    href2:'/Temperature',
-    refInfo2:'Temperature',
-    href3:'/Customer',
-    refInfo3:'Customer',
-    href4:'/Login',
-    refInfo4:'Login',
-    href5:'/Help',
-    refInfo5:'Help'
+    menu
   });
 });
 
 //The login page sets the username in customer object
 app.get('/Login',(req,res) =>{ // respond to the get the login html page request
   console.log('Inside Login page');
+  var respTitle ="New Login Page";
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
   var respUserName = req.requestCustomer;
   console.log(respUserName);
   res.render('Login.hbs',{ // The render html page changes here
-    title:'ADM Login Page',
-    pageHeading:'Login Page',
+    title:respTitle,
+    pageHeading:respTitle,
     footer:respFooter,
     refName:respUserName,
-    href1:'/',
-    refInfo1:'Home',
-    href2:'/Temperature',
-    refInfo2:'Temperature',
-    href3:'/Customer',
-    refInfo3:'Customer',
-    href4:'/Login',
-    refInfo4:'Login',
-    href5:'/Help',
-    refInfo5:'Help'
+    //The Navigation link
+    menu
   });
 });
 
 app.get('/help',(req,res) =>{ // respond to the get help request
   console.log('Inside help page');
+  var respTitle = "ADM Help Page";
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
   res.render('index.hbs',{
-    title:'ADM Help Page',
-    pageHeading:'Help Page',
+    title:respTitle,
+    pageHeading:respTitle,
     footer:respFooter,
-    href1:'/',
-    refInfo1:'Home',
-    href2:'/Temperature',
-    refInfo2:'Temperature',
-    href3:'/Customer',
-    refInfo3:'Customer',
-    href4:'/Login',
-    refInfo4:'Login',
-    href5:'/Help',
-    refInfo5:'Help'
+    //The Navigation link
+    menu
   });
 });
 

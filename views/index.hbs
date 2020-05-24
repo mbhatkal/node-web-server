@@ -11,18 +11,15 @@
   <h1>{{pageHeading}}</h1>
   </header>
   <nav>
-      <a href="{{href1}}">{{refInfo1}}</a>
-      <a href="{{href2}}">{{refInfo2}}</a>
-      <a href="{{href3}}">{{refInfo3}}</a>
-      <a href="{{href4}}">{{refInfo4}}</a>
-      <a href="{{href5}}">{{refInfo5}}</a>
+    {{#each menu}}
+      <a href="/{{this}}">{{this}}</a>
+    {{/each}}
   </nav>
   <article>Article - Section
   	<section>
-    	<div>Product 1 </div>
-    	<div>Product 2 </div>
-    	<div>Product 3 </div>
-    	<div>Product 4 </div>
+      {{#each product}}
+        <div>{{this}}</div>
+      {{/each}}
     </section>
   </article>
   <aside>Aside</aside>
