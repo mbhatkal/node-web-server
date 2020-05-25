@@ -4,10 +4,12 @@ border: 1px solid gray;
 padding: 25px;
 margin-bottom: 25px;
 }
+
+
 /* We need first to define a Flex/Grid container */
-nav, a {
+/*padding-right: 50px */
+nav, div, a {
   display: flex;
-  background: #659494;
   padding-right: 50px;
 }
 /* hover selector on the anchor element */
@@ -16,8 +18,7 @@ nav a:hover {
   }
 
 div {
-  background: #659494;
-  color: white;
+  background: #aaaaaa;
   text-align: center;
   margin: 15px;
   padding: 100px;
@@ -25,5 +26,7 @@ div {
 
 section {
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  padding-bottom: 50px;
+  grid-template-columns: auto auto auto;
 }
+

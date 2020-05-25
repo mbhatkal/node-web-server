@@ -5,11 +5,14 @@ const express = require('express'); // loaded express
 // To handle meta data in <head> we need express.Router()
 const hbs = require('hbs');
 const request = require('request');
+const fs = require('fs');
+const path = require('path');
 
 //define a array
 // JavaScript objects are containers for named values called properties or methods.
-const menu = ["Home","Temperature","Customer","Login","Help"];
+const menu = ["Home","Temperature","Customer","Login","Pdf","Help"];
 const product = ["LGLite","TKBase","TKDSP","LGLiteATE"];
+var pdfFile = new Array();
 
 const customer = {
   name:"Mahesh",
@@ -24,6 +27,7 @@ let apiKey = '151db84bf12a3993cf793a6540e4a48c';
 var app = express(); // create the web server application
 //  Using app.use() means that this middleware will be called for every call to the application.
 app.use(express.static('public')); // all html files in static directory
+app.use(express.static('pdf')); // all pdf files 
 app.set('view_engine','hbs');
 console.log('Setting userName');
 app.listen(port); // wait for a connection from a browser
@@ -98,17 +102,38 @@ var requestWeather = function(req,res,next){
   next();
 }
 
+//Middleware No 005 for getting PDF File List
+var requestPdf = function(req,res,next){
+//The application is in __dirname, while the cid = 20000 a number
+pdfFile.length = 0; //clear the array before use
+const subDir = 'pdf';
+const dirPath = path.join(__dirname,subDir);
+fs.readdir(dirPath,(err,files) =>{
+  if(err){
+    console.log(err);
+    return; };
+    files.forEach( (file) =>{
+      pdfFile.push(file);
+     });
+  });
+  console.log(pdfFile);
+  next();
+};
+
+
+
 //The middleware is called before the request
 app.use(requestTime);
 app.use(requestCustomer);
 app.use(requestCity);
 app.use(requestWeather);
+app.use(requestPdf);
 // we now process the http request
 
-//The routes for the website
+//The Homepage routes for the website
 app.get('/',(req,res) => {
   console.log("Redirecting to /Home");
-  res.redirect('Home');
+  res.redirect('/Home');
 });
 
 app.get('/Home',(req,res) =>{ // respond to the get root request
@@ -152,11 +177,11 @@ app.get('/Temperature',(req,res) =>{ // respond to the get Temperature request
 //The login page sets the username in customer object
 app.get('/Login',(req,res) =>{ // respond to the get the login html page request
   console.log('Inside Login page');
-  var respTitle ="New Login Page";
+  var respTitle ="Login Page : ";
   var respFooter ="ADM Web Server Version 1.0 - "
   respFooter += req.requestTime;
   var respUserName = req.requestCustomer;
-  console.log(respUserName);
+  respTitle += respUserName;
   res.render('Login.hbs',{ // The render html page changes here
     title:respTitle,
     pageHeading:respTitle,
@@ -166,6 +191,24 @@ app.get('/Login',(req,res) =>{ // respond to the get the login html page request
     menu
   });
 });
+
+//The file list for pdf
+app.get('/Pdf',(req,res) => {
+  console.log('Inside Pdf reader');
+  var respTitle ="PDF Documents Page : ";
+  var respFooter ="ADM Web Server Version 1.0 - "
+  respFooter += req.requestTime;
+  respTitle += "*.pdf";
+  res.render('pdf.hbs',{ // The render html page changes here
+    title:respTitle,
+    pageHeading:respTitle,
+    footer:respFooter,
+    //The Navigation link
+    menu,
+    pdfFile
+  });
+});
+
 
 app.get('/help',(req,res) =>{ // respond to the get help request
   console.log('Inside help page');
